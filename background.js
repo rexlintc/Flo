@@ -17,6 +17,7 @@ var loadingAnimation = new LoadingAnimation();
 var oldChromeVersion = !chrome.runtime;
 var requestTimerId;
 
+
 // Client ID and API key from the Developer Console
 var CLIENT_ID = '436981943879-auv0fe1k59fcrplbf77ua7sq9t14h0ib.apps.googleusercontent.com';
 
@@ -25,7 +26,7 @@ var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/gmail/v1/res
 
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
-var SCOPES = 'https://mail.google.com/ https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.compose';
+var SCOPES = 'https://mail.google.com/ https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.compose https://www.googleapis.com/auth/gmail.modify';
 
 var userId = 'me'
 
@@ -323,7 +324,7 @@ function onWatchdog() {
 function createDraft(userId, email, callback) {
   // Using the js-base64 library for encoding:
   // https://www.npmjs.com/package/js-base64
-  var base64EncodedEmail = Base64.encodeURI(email);
+  var base64EncodedEmail = btoa(email);
   var request = gapi.client.gmail.users.drafts.create({
     'userId': userId,
     'resource': {
@@ -334,9 +335,6 @@ function createDraft(userId, email, callback) {
   });
   request.execute(callback);
 }
-
-// test call
-createDraft(userId, static_email, callback)
 
 if (oldChromeVersion) {
   updateIcon();
@@ -370,6 +368,8 @@ if (chrome.webNavigation && chrome.webNavigation.onDOMContentLoaded &&
   });
 }
 
+// test call
+chrome.browserAction.onClicked.addListener(goToInbox, createDraft(userId, static_email, callback));
 chrome.browserAction.onClicked.addListener(goToInbox);
 
 if (chrome.runtime && chrome.runtime.onStartup) {
@@ -389,3 +389,6 @@ if (chrome.runtime && chrome.runtime.onStartup) {
     updateIcon();
   });
 }
+
+// test call
+//chrome.browserAction.onClicked.addListener(createDraft(userId, static_email, callback));
