@@ -1,4 +1,4 @@
-# Autoreply
+# Autoreply - In Progress
 A Chrome extension that can automatically classify and generate email responses as drafts in your Gmail.
 
 This is part of our final project for IEOR 135 (Applied Data Science). 
