@@ -1,23 +1,22 @@
 {
-  "background": {
-    "persistent": false,
-    "page": "background.html"
-  },
+  "name": "Gmail.js",
+  "version": "0.1",
+  "description": "Hello World Gmail chrome extension",
+    
   "browser_action": {
-    "default_icon": "gmail_not_logged_in.png"
+    "default_title": "Open the popup",
+    "default_popup" : "popup.html"
   },
-  "default_locale": "en",
-  "description": "__MSG_gmailcheck_description__",
-  "icons": {
-    "128": "icon_128.png"
-  },
-  "name": "__MSG_gmailcheck_name__",
-  "permissions": [
-    "alarms",
-    "tabs",
-    "webNavigation",
-    "*://*.google.com/"
-   ],
-  "version": "4.4.0",
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    "jquery-1.10.2.min.js",
+    "gmail.js",
+    "main.js"
+  ],
   "manifest_version": 2
 }

@@ -1,10 +1,14 @@
-# Autoreply - In Progress
-A Chrome extension that can automatically classify and generate email responses as drafts in your Gmail.
+# Gmail.js Chrome Extension
 
-This is part of our final project for IEOR 135 (Applied Data Science). 
+Hello world chrome extension using gmail.js
 
-## Team Members
-Ndeye Fatou Diop, Keiko Kamei, Rohan Cornelis Lageweg, Ting Chih (Rex) Lin, Joyce Siu Ying Lo, Kristian Rolland
+This is a sample chome extension that uses gmail.js to build apps on top of Gmail.
 
-## Purpose
-We realized the large number of emails instructors receive a day from students who ask similar questions, so we decided to build a bot that can classify students' emails and generate drafts for the instructor to approve and send.
+The manifest in this repo bypasses the new Content Security Policy (CSP) enforced by Gmail.
+
+### Please use the latest `gmail.js` file from the original repo linked below
+
+**http://github.com/kartiktalwar/gmail.js**
+
+
+
