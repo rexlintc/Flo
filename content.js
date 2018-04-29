@@ -10,7 +10,7 @@ InboxSDK.load('1', 'sdk_autoreply_c87f866c58').then(function(sdk){
 		// a compose view has come into existence, do something with it!
 		composeView.addButton({
 			title: "Generate Draft",
-			iconUrl: 'https://lh5.googleusercontent.com/itq66nh65lfCick8cJ-OPuqZ8OUDTIxjCc25dkc4WUT1JG8XG3z6-eboCu63_uDXSqMnLRdlvQ=s128-h128-e365',
+			iconUrl: chrome.runtime.getURL('images/compose.png'), //<div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 			// onClick: generateDraft(event),
 			onClick: function(event) {
 				generateDraft(event);
@@ -48,7 +48,7 @@ function generateDraft(event) {
 
 function addEmailIndicatorToThreadRow(threadRowView, email) {
 	threadRowView.addImage({
-		imageUrl: chrome.runtime.getURL('images/checked.png'),
+		imageUrl: chrome.runtime.getURL('images/checked.png'), //<div>Icons made by <a href="https://www.flaticon.com/authors/maxim-basinski" title="Maxim Basinski">Maxim Basinski</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 		tooltip: email,
     imageClass: 'rounded_check'
 	});
