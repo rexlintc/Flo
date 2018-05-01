@@ -149,23 +149,6 @@ function getBerkeleyEmail(contact, currentUserEmail) {
 
 
 function classifyEmail(emailData) {
-	// Send Request to Model 
-	// var label;
-	// var xhr = new XMLHttpRequest();
-	// var url = "https://email-reply-bot.herokuapp.com/predict";
-	// xhr.open("POST", url, true);
-	// xhr.setRequestHeader("Content-Type", "application/json");
-	// xhr.onreadystatechange = function () {
-	//     if (xhr.readyState === 4 && xhr.status === 200) {
-	//         var json = JSON.parse(xhr.responseText);
-	//         console.log(json.label);
-	//         label = json.label;
-	//     }
-	// };
-	// var data = JSON.stringify({"email": "hey@mail.com", "password": "101010"});
-	// xhr.send(data);
-
-	// return label; // 
 	return Math.floor(Math.random() * 8) + 1;
 }
 
@@ -186,15 +169,3 @@ function addEmailLabelToThreadRow(threadRowView, emailData) {
 		iconUrl: chrome.runtime.getURL('images/tag_64.png')
 	});
 }
-
-// Asynchronous hpptGet function
-// function httpGetAsync(theUrl, callback)
-// {
-//     var xmlHttp = new XMLHttpRequest();
-//     xmlHttp.onreadystatechange = function() { 
-//         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-//             callback(xmlHttp.responseText);
-//     }
-//     xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-//     xmlHttp.send(null);
-// }

@@ -1,7 +1,9 @@
 {
   "name": "Flo",
+  "short_name": "Flo",
   "description": "An extension that automatically labels emails and generates a draft response.",
-  "version": "0.0.0.3",
+  "version": "0.0.0.4",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArxKnWVhckEGu73HMygudaiYV8GGukQzG7hzFaYV7gPkoAf4M+eidl3/YZ9F1CNa0Wkq+8FrnY4QNYl5CisFyNWDXtDs7dmZRzi9R0KsHI4z6To9OkBkM7UeDO94fTm711F5500QdqlMTKE3gZD14v+peJspnL9it4CA2DbSwe2F5gp+Sz0vDnM28WflwMG+EWvQMI8/yW0YM3WE3Q7Dw/oJnj3JEAEGBAS8xY4uzNJJmZcG9A4qCopMPa7ebmRZZZaXev1Yq6FGx8GpcpNU4jRXpfsQOluhB97VcQLc4ik5bidQRQrWlmYhUrFB4zcv5OhqdBotGEKKn38ycdnXNNQIDAQAB",
   "icons": {
     "128" : "images/wave_128.png"
   },
@@ -29,15 +31,15 @@
     "https://mail.google.com/",
     "https://inbox.google.com/",
     "https://*.herokuapp.com/",
-    "https://*/",
-    "http://*/"
+    "https://apis.google.com/js/client.js"
   ],
     "web_accessible_resources": [
     "images/*",
     "sidebarTemplate.html",
     "gmail.js",
     "main.js",
-    "jquery-1.10.2.min.js"
+    "jquery-1.10.2.min.js",
+    "https://apis.google.com/js/client.js"
   ],
   "oauth2": {
     "client_id": "576476512220-g8s9soucu2tkv6jeb840vv91s76vcp1r.apps.googleusercontent.com",
