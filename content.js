@@ -68,41 +68,6 @@ var labelColorDict_1 = {
 }
 
 
-// on the sending side
-
-// this variable will store callbacks
-var acknowledgments = {};
-
-var port = chrome.runtime.connect();
-
-// this variable will be unique callback idetifier
-var address = Math.random().toString(36);
-
-// You create acknowledgment by identifying callback
-acknowledgments[address] = function (data) {
-    // callback function
-    // do what you like with result data
-    
-};
-
-port.postMessage({
-    acknowledgment: address,
-    data: messageData
-})
-
-port.onMessage.addListener(function (message) {
-    var callback = acknowledgments[message.acknowledgment];
-    if (callback) {
-        callback(message.data);
-        // don't forget to unset acknowledgment, because it's 
-        // supposed to exists only until it's been called.
-        delete acknowledgments[message.acknowledgment];
-        return;
-    }
-
-    // other message types handling
-});
-
 InboxSDK.load('1', 'sdk_autoreply_c87f866c58').then(function(sdk){
 
 	// the SDK has been loaded, now do something with it!
@@ -130,28 +95,34 @@ InboxSDK.load('1', 'sdk_autoreply_c87f866c58').then(function(sdk){
 		});
 	});
 
+	chrome.runtime.onConnect.addListener(function (port) {
+  		console.assert(port.name == "getEmailThread");
+  		port.onMessage.addListener(function (msg) {
+    		if (msg.joke == "Knock knock")
+    			port.postMessage({question: "Who's there?"})
+    			consolge.log(msg.answer);
+  		});
+	});
 
 	sdk.Lists.registerThreadRowViewHandler(function(threadRowView) {
-		var visibleThreads;
 
-
-		for (var i = 0; i < visibleThreads.legnth; i++) {
-			var sender = visibleThreads[i].sender;
-			var currentUserEmail = sdk.User.getEmailAddress();
-			console.log(sender);
+		//for (var i = 0; i < visibleThreads.legnth; i++) {
+			//var sender = visibleThreads[i].sender;
+			//var currentUserEmail = sdk.User.getEmailAddress();
+			//console.log(i);
 		// 	if (getBerkeleyEmail(sender, currentUserEmail)) {
 		// 		addEmailLabelToThreadRow(threadRowView, visibleThreads[i]);
 		// 	}
+		//}
+		var contacts = threadRowView.getContacts();
+		for (var i = 0; i < contacts.length; i++) {
+			var contact = contacts[i];
+			//console.log(contact);
+			if (getBerkeleyEmail(contact, sdk.User.getEmailAddress())) {
+				addEmailLabelToThreadRow(threadRowView, contact.emailAddress);
+      			//addEmailIndicatorToThreadRow(threadRowView, contact.emailAddress);
+      		}
 		}
-		// var contacts = threadRowView.getContacts();
-		// for (var i = 0; i < contacts.length; i++) {
-		// 	var contact = contacts[i];
-		// 	//console.log(contact);
-		// 	if (getBerkeleyEmail(contact, sdk.User.getEmailAddress())) {
-		// 		addEmailLabelToThreadRow(threadRowView, contact.emailAddress);
-  //     			//addEmailIndicatorToThreadRow(threadRowView, contact.emailAddress);
-  //     		}
-		// }
 	});
 });
 
@@ -176,11 +147,25 @@ function getBerkeleyEmail(contact, currentUserEmail) {
 	}
 }
 
+
 function classifyEmail(emailData) {
-	// To-Do
 	// Send Request to Model 
-	var label;
-	//random return
+	// var label;
+	// var xhr = new XMLHttpRequest();
+	// var url = "https://email-reply-bot.herokuapp.com/predict";
+	// xhr.open("POST", url, true);
+	// xhr.setRequestHeader("Content-Type", "application/json");
+	// xhr.onreadystatechange = function () {
+	//     if (xhr.readyState === 4 && xhr.status === 200) {
+	//         var json = JSON.parse(xhr.responseText);
+	//         console.log(json.label);
+	//         label = json.label;
+	//     }
+	// };
+	// var data = JSON.stringify({"email": "hey@mail.com", "password": "101010"});
+	// xhr.send(data);
+
+	// return label; // 
 	return Math.floor(Math.random() * 8) + 1;
 }
 
