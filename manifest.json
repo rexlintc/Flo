@@ -35,10 +35,9 @@
   ],
     "web_accessible_resources": [
     "images/*",
-    "sidebarTemplate.html",
     "gmail.js",
     "main.js",
-    "jquery-1.10.2.min.js",
+    "sidebarTemplate.html",
     "https://apis.google.com/js/client.js"
   ],
   "oauth2": {
