@@ -1,14 +1,9 @@
-# Gmail.js Chrome Extension
+# Flo Chrome Extension
 
-Hello world chrome extension using gmail.js
+This is a prototype Chrome Extension for the class IEOR 135 Data-X (Applied Data Science)
 
-This is a sample chome extension that uses gmail.js to build apps on top of Gmail.
+Team Members: Ndeye Fatou Diop, Keiko Kamei, Rohan Lageweg, Ting Chih Lin, Joyce Siu Ying Lo, Kristian Rolland
 
-The manifest in this repo bypasses the new Content Security Policy (CSP) enforced by Gmail.
-
-### Please use the latest `gmail.js` file from the original repo linked below
-
-**http://github.com/kartiktalwar/gmail.js**
-
+This extension automatically classifies emails and also generate draft responses.
 
 

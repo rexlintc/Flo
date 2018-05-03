@@ -115,3 +115,64 @@ function archiveThread(id){
 
 	request.execute();
 }
+
+
+function goToInbox() {
+  console.log('Going to inbox...');
+  chrome.tabs.getAllInWindow(undefined, function(tabs) {
+    for (var i = 0, tab; tab = tabs[i]; i++) {
+      if (tab.url && isGmailUrl(tab.url)) {
+        console.log('Found Gmail tab: ' + tab.url + '. ' +
+                    'Focusing and refreshing count...');
+        chrome.tabs.update(tab.id, {selected: true});
+        startRequest({scheduleRequest:false, showLoadingAnimation:false});
+        return;
+      }
+    }
+    console.log('Could not find Gmail tab. Creating one...');
+    chrome.tabs.create({url: getGmailUrl()});
+  });
+}
+
+var filters = {
+  // TODO(aa): Cannot use urlPrefix because all the url fields lack the protocol
+  // part. See crbug.com/140238.
+  url: [{urlContains: getGmailUrl().replace(/^https?\:\/\//, '')}]
+};
+
+function onNavigate(details) {
+  if (details.url && isGmailUrl(details.url)) {
+    console.log('Recognized Gmail navigation to: ' + details.url + '.' +
+                'Refreshing count...');
+    startRequest({scheduleRequest:false, showLoadingAnimation:false});
+  }
+}
+if (chrome.webNavigation && chrome.webNavigation.onDOMContentLoaded &&
+    chrome.webNavigation.onReferenceFragmentUpdated) {
+  chrome.webNavigation.onDOMContentLoaded.addListener(onNavigate, filters);
+  chrome.webNavigation.onReferenceFragmentUpdated.addListener(
+      onNavigate, filters);
+} else {
+  chrome.tabs.onUpdated.addListener(function(_, details) {
+    onNavigate(details);
+  });
+}
+
+chrome.browserAction.onClicked.addListener(goToInbox);
+
+if (chrome.runtime && chrome.runtime.onStartup) {
+  chrome.runtime.onStartup.addListener(function() {
+    console.log('Starting browser... updating icon.');
+    startRequest({scheduleRequest:false, showLoadingAnimation:false});
+    updateIcon();
+  });
+} else {
+  // This hack is needed because Chrome 22 does not persist browserAction icon
+  // state, and also doesn't expose onStartup. So the icon always starts out in
+  // wrong state. We don't actually use onStartup except as a clue that we're
+  // in a version of Chrome that has this problem.
+  chrome.windows.onCreated.addListener(function() {
+    console.log('Window created... updating icon.');
+    startRequest({scheduleRequest:false, showLoadingAnimation:false});
+  });
+}
