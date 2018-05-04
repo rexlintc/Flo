@@ -24,6 +24,10 @@ var main = function(){
   }
 }
 
+/**
+* Post email to model hosted on Heroku
+* @param emailData
+*/
 function postRequest(emailData) {
   //console.log(emailData);
   fetch('https://cors-anywhere.herokuapp.com/https://email-reply-bot.herokuapp.com/predict', {

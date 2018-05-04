@@ -1,29 +1,3 @@
-chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
-  if (changeInfo.status == 'complete') {
-    chrome.identity.getAuthToken({ 'interactive': true }, function(token) {
-      thisToken = token
-      console.log(thisToken);
-      chrome.runtime.onMessage.addListener(
-        function(request,sender,sendResponse){
-          var gapiRequestUrlAndToken = "https://www.googleapis.com/gmail/v1/users/me/threads?access_token=" + thisToken
-
-          var makeGetRequest = function (gapiRequestURL)
-            {
-                var xmlHttp = new XMLHttpRequest();
-                xmlHttp.open( "GET", gapiRequestURL, false );
-                xmlHttp.send( null );
-                return xmlHttp.responseText;
-            }
-
-          makeGetRequest(gapiRequestUrlAndToken);
-        }
-      );
-    });
-  }
-  console.log("authentication complete");
-  console.log("Your token: thisToken");
-})
-
 //oauth2 auth
 chrome.identity.getAuthToken(
 	{'interactive': true},
@@ -33,8 +7,6 @@ chrome.identity.getAuthToken(
 		loadScript('https://apis.google.com/js/client.js');
 	}
 );
-
-// console.log("getAuthToken wasn't loaded");
 
 function loadScript(url){
   var request = new XMLHttpRequest();
@@ -125,7 +97,6 @@ function goToInbox() {
         console.log('Found Gmail tab: ' + tab.url + '. ' +
                     'Focusing and refreshing count...');
         chrome.tabs.update(tab.id, {selected: true});
-        startRequest({scheduleRequest:false, showLoadingAnimation:false});
         return;
       }
     }
@@ -144,9 +115,9 @@ function onNavigate(details) {
   if (details.url && isGmailUrl(details.url)) {
     console.log('Recognized Gmail navigation to: ' + details.url + '.' +
                 'Refreshing count...');
-    startRequest({scheduleRequest:false, showLoadingAnimation:false});
   }
 }
+
 if (chrome.webNavigation && chrome.webNavigation.onDOMContentLoaded &&
     chrome.webNavigation.onReferenceFragmentUpdated) {
   chrome.webNavigation.onDOMContentLoaded.addListener(onNavigate, filters);
@@ -176,3 +147,29 @@ if (chrome.runtime && chrome.runtime.onStartup) {
     startRequest({scheduleRequest:false, showLoadingAnimation:false});
   });
 }
+
+// chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
+//   if (changeInfo.status == 'complete') {
+//     chrome.identity.getAuthToken({ 'interactive': true }, function(token) {
+//       thisToken = token
+//       console.log(thisToken);
+//       chrome.runtime.onMessage.addListener(
+//         function(request,sender,sendResponse){
+//           var gapiRequestUrlAndToken = "https://www.googleapis.com/gmail/v1/users/me/threads?access_token=" + thisToken
+
+//           var makeGetRequest = function (gapiRequestURL)
+//             {
+//                 var xmlHttp = new XMLHttpRequest();
+//                 xmlHttp.open( "GET", gapiRequestURL, false );
+//                 xmlHttp.send( null );
+//                 return xmlHttp.responseText;
+//             }
+
+//           makeGetRequest(gapiRequestUrlAndToken);
+//         }
+//       );
+//     });
+//   }
+//   console.log("authentication complete");
+//   console.log("Your token: thisToken");
+// })
